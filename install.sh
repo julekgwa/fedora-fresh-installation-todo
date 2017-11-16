@@ -27,16 +27,18 @@ WORKSPACE_TO_DOCK="workspaces-to-dock@passingthru67.gmail.com.shell-extension.zi
 WORKSPACE_TO_DOCK_UUID="workspaces-to-dock@passingthru67.gmail.com"
 
 enable_user_themes() {
-	EXTENSIONS=$(gsettings get org.gnome.shell enabled-extensions)
-	if [[ $EXTENSIONS == *"user-theme@gnome-shell-extensions.gcampax.github.com"* ]]; then
+	echo -e "\nenable_user_themes() {
+	EXTENSIONS=\$(gsettings get org.gnome.shell enabled-extensions)
+	if [[ \$EXTENSIONS == *\"user-theme@gnome-shell-extensions.gcampax.github.com\"* ]]; then
 		return
 	fi
 
-	TMP="${EXTENSIONS:: -1}"
-	TMP+=", 'user-theme@gnome-shell-extensions.gcampax.github.com']"
+	TMP=\"\${EXTENSIONS:: -1}\"
+	TMP+=\", 'user-theme@gnome-shell-extensions.gcampax.github.com']\"
 	
     # enable extension
-    gsettings set org.gnome.shell enabled-extensions "$TMP"
+    gsettings set org.gnome.shell enabled-extensions \"\$TMP\"
+}" >> tmp_install.sh
 }
 
 install_extenstions() {
@@ -98,6 +100,8 @@ install_extenstions
 
 # create show message function in tmp_install.sh
 showMessage
+
+# create enable user themes function in tmp_install.sh
 
 GOOGLE_CHROME="https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm"
 FILE_NAME="google-chrome-stable_current_x86_64.rpm"
@@ -361,10 +365,9 @@ fi
 prompt_confirm "install Paper-icon-theme and paper-gtk-theme? [Y/N]"
 if [ $? -eq 0 ];
 then
-	enable_user_themes
 	echo -e "\n# install Paper-icon-theme" >> tmp_install.sh
 	echo "showMessage \"Installing Paper Theme...\"" >> tmp_install.sh
-	echo "dnf -y config-manager --add-repo https://download.opensuse.org/repositories/home:snwh:paper/Fedora_25/home:snwh:paper.repo && dnf -y install paper-icon-theme && dnf -y install paper-gtk-theme" >> tmp_install.sh
+	echo "dnf -y config-manager --add-repo https://download.opensuse.org/repositories/home:snwh:paper/Fedora_25/home:snwh:paper.repo && dnf -y install paper-icon-theme && dnf -y install paper-gtk-theme && enable_user_themes" >> tmp_install.sh
 fi
 
 # install Numix theme
@@ -372,10 +375,9 @@ fi
 prompt_confirm "install Numix Theme? [Y/N]"
 if [ $? -eq 0 ];
 then
-	enable_user_themes
 	echo -e "\n# install numix theme" >> tmp_install.sh
 	echo "showMessage \"Installing Numix Theme...\"" >> tmp_install.sh
-	echo "dnf -y install numix-gtk-theme numix-icon-theme numix-icon-theme-circle" >> tmp_install.sh
+	echo "dnf -y install numix-gtk-theme numix-icon-theme numix-icon-theme-circle && enable_user_themes" >> tmp_install.sh
 fi
 
 # Extensions
