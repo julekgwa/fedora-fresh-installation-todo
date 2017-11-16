@@ -1,4 +1,4 @@
-# Things to Do After Fresh Installation
+# Things to Do After Fresh Installation of Fedora 22+
 
 # Download
 ```
