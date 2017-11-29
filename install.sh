@@ -54,8 +54,8 @@ install_extension() {
 	fi
 
 	wget -O /tmp/extension.zip \"https://extensions.gnome.org/download-extension/\${DOWNLOAD_URL}\"
-	mkdir -p \"\$HOME/.local/share/gnome-shell/extensions/\${UUID}\"
-	unzip /tmp/extension.zip -d \"\$HOME/.local/share/gnome-shell/extensions/\${UUID}\"
+	mkdir -p \"/home/\$SUDO_USER/.local/share/gnome-shell/extensions/\${UUID}\"
+	unzip /tmp/extension.zip -d \"/home/\$SUDO_USER/.local/share/gnome-shell/extensions/\${UUID}\"
 	EXTENSIONS=\$(gsettings get org.gnome.shell enabled-extensions)
 	TMP=\"\${EXTENSIONS:: -1}\"
 	TMP+=\", '\${UUID}']\"
